@@ -72,7 +72,7 @@
                                                                                 <li><a href="page.html">Sample Page</a></li>
                                                                         </ul>
                                                                 </li>
-                                                                <li><a href="contact.html">Contact</a></li>
+                                                                <li><a href="contact.html">联系</a></li>
                                                         </ul>
                                                 </div>
                                         </nav>
@@ -118,8 +118,8 @@
                                                         <div class="post-meta clearfix">
                                                                 <span class="date" id="msg-date"></span>
                                                                 <span class="category"><a href="#" id="msg-tag"></a></span>
-                                                                <span class="comments"><a href="#">3 Comments</a></span>
-                                                                <span class="like-count">66</span>
+                                                                <span class="comments"><a href="#" id="msg-review-count"></a></span>
+                                                                <span class="like-count" id="msg-heat"></span>
                                                         </div><!-- end of post meta -->
 
                                                         <span id="msg-content"></span>
@@ -144,7 +144,7 @@
 
                                                         <div id="respond">
 
-                                                                <h3>Leave a Reply</h3>
+                                                                <h3>评论</h3>
 
                                                                 <div class="cancel-comment-reply">
                                                                         <a rel="nofollow" id="cancel-comment-reply-link" href="#" style="display:none;">Click here to cancel reply.</a>
@@ -152,35 +152,18 @@
 
 
                                                                 <form action="#" method="post" id="commentform">
-
-
-                                                                        <p class="comment-notes">Your email address will not be published. Required fields are marked <span class="required">*</span></p>
-
-                                                                        <div>
-                                                                                <label for="author">Name *</label>
-                                                                                <input class="span4" type="text" name="author" id="author" value="" size="22">
-                                                                        </div>
+                                                                        <input hidden="hidden" id="msgId" name="msgId" value="" />
+                                                                        <input hidden="hidden" id="userId" name="userId" value="" />
 
                                                                         <div>
-                                                                                <label for="email">Email *</label>
-                                                                                <input class="span4" type="text" name="email" id="email" value="" size="22" >
-                                                                        </div>
-
-                                                                        <div>
-                                                                                <label for="url">Website</label>
-                                                                                <input class="span4" type="text" name="url" id="url" value="" size="22" >
-                                                                        </div>
-
-
-                                                                        <div>
-                                                                                <label for="comment">Comment</label>
+                                                                                <label for="comment">内容</label>
                                                                                 <textarea class="span8" name="comment" id="comment" cols="58" rows="10"></textarea>
                                                                         </div>
 
-                                                                        <p class="allowed-tags">You can use these HTML tags and attributes <small><code>&lt;a href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; &lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=""&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;strike&gt; &lt;strong&gt; </code></small></p>
+                                                                        <p class="allowed-tags">您可以使用这些HTML标记和属性 <small><code>&lt;a href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; &lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=""&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;strike&gt; &lt;strong&gt; </code></small></p>
 
                                                                         <div>
-                                                                                <input class="btn" name="submit" type="submit" id="submit"  value="Submit Comment">
+                                                                                <input class="btn" name="save-review" type="button" id="save-review" value="提交评论">
                                                                         </div>
 
                                                                 </form>
@@ -198,8 +181,8 @@
 
                                                 <section class="widget">
                                                         <div class="support-widget">
-                                                                <h3 class="title">Support</h3>
-                                                                <p class="intro">Need more support? If you did not found an answer, contact us for further help.</p>
+                                                                <h3 class="title">支持</h3>
+                                                                <p class="intro">需要更多支持？如果您没有找到答案，请联系我们获取进一步的帮助。</p>
                                                         </div>
                                                 </section>
 
@@ -211,27 +194,27 @@
 
 
 
-                                                <section class="widget"><h3 class="title">Categories</h3>
-                                                        <ul>
-                                                                <li><a href="#" title="Lorem ipsum dolor sit amet,">Advanced Techniques</a> </li>
-                                                                <li><a href="#" title="Lorem ipsum dolor sit amet,">Designing in WordPress</a></li>
-                                                                <li><a href="#" title="Lorem ipsum dolor sit amet,">Server &amp; Database</a></li>
-                                                                <li><a href="#" title="Lorem ipsum dolor sit amet, ">Theme Development</a></li>
-                                                                <li><a href="#" title="Lorem ipsum dolor sit amet,">Website Dev</a></li>
-                                                                <li><a href="#" title="Lorem ipsum dolor sit amet,">WordPress for Beginners</a></li>
-                                                                <li><a href="#" title="Lorem ipsum dolor sit amet, ">WordPress Plugins</a></li>
-                                                        </ul>
-                                                </section>
+                                                <!--<section class="widget"><h3 class="title">Categories</h3>-->
+                                                        <!--<ul>-->
+                                                                <!--<li><a href="#" title="Lorem ipsum dolor sit amet,">Advanced Techniques</a> </li>-->
+                                                                <!--<li><a href="#" title="Lorem ipsum dolor sit amet,">Designing in WordPress</a></li>-->
+                                                                <!--<li><a href="#" title="Lorem ipsum dolor sit amet,">Server &amp; Database</a></li>-->
+                                                                <!--<li><a href="#" title="Lorem ipsum dolor sit amet, ">Theme Development</a></li>-->
+                                                                <!--<li><a href="#" title="Lorem ipsum dolor sit amet,">Website Dev</a></li>-->
+                                                                <!--<li><a href="#" title="Lorem ipsum dolor sit amet,">WordPress for Beginners</a></li>-->
+                                                                <!--<li><a href="#" title="Lorem ipsum dolor sit amet, ">WordPress Plugins</a></li>-->
+                                                        <!--</ul>-->
+                                                <!--</section>-->
 
-                                                <section class="widget">
-                                                        <h3 class="title">Recent Comments</h3>
-                                                        <ul id="recentcomments">
-                                                                <li class="recentcomments"><a href="#" rel="external nofollow" class="url">John Doe</a> on <a href="#">Integrating WordPress with Your Website</a></li>
-                                                                <li class="recentcomments">saqib sarwar on <a href="#">Integrating WordPress with Your Website</a></li>
-                                                                <li class="recentcomments"><a href="#" rel="external nofollow" class="url">John Doe</a> on <a href="#">Integrating WordPress with Your Website</a></li>
-                                                                <li class="recentcomments"><a href="#" rel="external nofollow" class="url">Mr WordPress</a> on <a href="#">Installing WordPress</a></li>
-                                                        </ul>
-                                                </section>
+                                                <!--<section class="widget">-->
+                                                        <!--<h3 class="title">Recent Comments</h3>-->
+                                                        <!--<ul id="recentcomments">-->
+                                                                <!--<li class="recentcomments"><a href="#" rel="external nofollow" class="url">John Doe</a> on <a href="#">Integrating WordPress with Your Website</a></li>-->
+                                                                <!--<li class="recentcomments">saqib sarwar on <a href="#">Integrating WordPress with Your Website</a></li>-->
+                                                                <!--<li class="recentcomments"><a href="#" rel="external nofollow" class="url">John Doe</a> on <a href="#">Integrating WordPress with Your Website</a></li>-->
+                                                                <!--<li class="recentcomments"><a href="#" rel="external nofollow" class="url">Mr WordPress</a> on <a href="#">Installing WordPress</a></li>-->
+                                                        <!--</ul>-->
+                                                <!--</section>-->
 
                                         </aside>
                                         <!-- end of sidebar -->

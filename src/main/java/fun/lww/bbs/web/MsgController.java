@@ -2,7 +2,7 @@ package fun.lww.bbs.web;
 
 import fun.lww.bbs.entity.Msg;
 import fun.lww.bbs.service.MsgService;
-import org.apache.commons.lang3.StringUtils;
+import fun.lww.bbs.vo.MsgVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,10 +38,19 @@ public class MsgController {
     }
 
     /**
-     * 精选信息
+     * 根据ID查询信息
      */
     @RequestMapping(value = "/getMsg", method = RequestMethod.GET)
     public Msg getMsgById(Integer id) {
         return msgService.getMsgById(id);
     }
+
+    /**
+     * 发表
+     */
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String save(MsgVo msgVo) {
+        return msgService.save(msgVo);
+    }
+
 }
