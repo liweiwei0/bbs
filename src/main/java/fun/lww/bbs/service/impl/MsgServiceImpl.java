@@ -1,14 +1,11 @@
 package fun.lww.bbs.service.impl;
 
-import fun.lww.bbs.dao.ReviewDao;
 import fun.lww.bbs.dao.UserDao;
 import fun.lww.bbs.entity.Msg;
 import fun.lww.bbs.dao.MsgDao;
-import fun.lww.bbs.entity.Review;
 import fun.lww.bbs.entity.User;
 import fun.lww.bbs.service.MsgService;
 import fun.lww.bbs.vo.MsgVo;
-import fun.lww.bbs.vo.ReviewVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +41,7 @@ public class MsgServiceImpl implements MsgService {
     @Override
     public List<Msg> getFeatured(String content) {
         if (StringUtils.isEmpty(content)) {
-            return msgDao.findFirst8ByOrderByCreateTimeDesc();
+            return msgDao.findFirst8ByOrderByHeatDesc();
         }
         return msgDao.findFirst8ByContentLikeOrderByHeatDesc(content);
     }
@@ -76,10 +73,15 @@ public class MsgServiceImpl implements MsgService {
         if (!optional.isPresent()) {
             return "用户不存在";
         }
+        StringBuilder tag = new StringBuilder();
+        msgVo.getTags().forEach(it -> tag.append(it).append(" & "));
         Msg msg = new Msg();
         msg.setUserId(msgVo.getUserId());
         msg.setContent(msgVo.getComment());
         msg.setTitle(msgVo.getTitle());
+        if (tag.length() > 0) {
+            msg.setTag(tag.toString().substring(0, tag.length() - 3));
+        }
         msg.setCreateTime(new Date());
         msg.setModifyTime(new Date());
         msg.setHeat(0);

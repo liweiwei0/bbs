@@ -2,13 +2,12 @@ package fun.lww.bbs.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import fun.lww.bbs.vo.UserVo;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import java.util.Date;
 
 /**
- * 标签实体
+ * 用户实体
  * create by liweiwei on 2019/03/16
  */
 @Entity

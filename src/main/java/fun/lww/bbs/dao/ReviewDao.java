@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface ReviewDao extends JpaRepository<Review, Integer> {
 
-    List<Review> findByMsgId(Integer msgId);
+    List<Review> findByMsgIdOrderByCreateTimeAsc(Integer msgId);
+
 }

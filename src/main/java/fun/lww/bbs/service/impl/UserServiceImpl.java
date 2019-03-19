@@ -1,10 +1,7 @@
 package fun.lww.bbs.service.impl;
 
-import fun.lww.bbs.dao.TagDao;
 import fun.lww.bbs.dao.UserDao;
-import fun.lww.bbs.entity.Tag;
 import fun.lww.bbs.entity.User;
-import fun.lww.bbs.service.TagService;
 import fun.lww.bbs.service.UserService;
 import fun.lww.bbs.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 
 @Service
 @Slf4j

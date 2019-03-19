@@ -36,4 +36,14 @@ public class ReviewController {
     public String saveReview(ReviewVo reviewVo) {
         return reviewService.save(reviewVo);
     }
+
+    /**
+     * 保存评论信息
+     */
+    @RequestMapping(value = "/delReview", method = RequestMethod.POST)
+    public String delReview(Integer id) {
+        return reviewService.delete(id);
+    }
+
+
 }

@@ -11,4 +11,5 @@ public interface ReviewService {
 
     String save(ReviewVo reviewVo);
 
+    String delete(Integer id);
 }

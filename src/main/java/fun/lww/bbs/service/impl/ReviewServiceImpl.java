@@ -7,7 +7,6 @@ import fun.lww.bbs.entity.Msg;
 import fun.lww.bbs.entity.Review;
 import fun.lww.bbs.entity.User;
 import fun.lww.bbs.service.ReviewService;
-import fun.lww.bbs.service.UserService;
 import fun.lww.bbs.vo.ReviewVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -36,7 +35,7 @@ public class ReviewServiceImpl implements ReviewService {
         if (null == msgId) {
             return null;
         }
-        return reviewDao.findByMsgId(msgId);
+        return reviewDao.findByMsgIdOrderByCreateTimeAsc(msgId);
     }
 
     @Override
@@ -69,5 +68,14 @@ public class ReviewServiceImpl implements ReviewService {
         review.setModifyTime(new Date());
         reviewDao.save(review);
         return "评论成功";
+    }
+
+    @Override
+    public String delete(Integer id) {
+        if (null == id) {
+            return "评论不存在";
+        }
+        reviewDao.deleteById(id);
+        return "删除成功";
     }
 }

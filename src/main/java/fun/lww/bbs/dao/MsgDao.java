@@ -12,4 +12,6 @@ public interface MsgDao extends JpaRepository<Msg, Integer> {
     List<Msg> findFirst8ByContentLikeOrderByHeatDesc(String content);
 
     List<Msg> findFirst8ByOrderByCreateTimeDesc();
+
+    List<Msg> findFirst8ByOrderByHeatDesc();
 }
