@@ -4,6 +4,7 @@ import fun.lww.bbs.entity.User;
 import fun.lww.bbs.service.UserService;
 import fun.lww.bbs.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.support.SimpleTriggerContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,7 @@ public class UserController {
      * 登陆
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public User login(User user) {
+    public String login(User user) {
         return userService.login(user);
     }
 
@@ -31,7 +32,12 @@ public class UserController {
      * 注册
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public User register(UserVo userVo) {
+    public String register(UserVo userVo) {
         return userService.register(userVo);
+    }
+
+    @RequestMapping(value = "/getUser", method = RequestMethod.POST)
+    public User getUser(String email, String password) {
+        return userService.getUser(email, password);
     }
 }

@@ -19,28 +19,41 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
-    public User login(User user) {
-        if (null == user || StringUtils.isEmpty(user.getEmail()) || StringUtils.isEmpty(user.getPassword())) {
-            return null;
+    public String login(User user) {
+        if (null == user
+            || StringUtils.isEmpty(user.getEmail())
+            || StringUtils.isEmpty(user.getPassword())) {
+            return "必填项不能为空";
         }
-        return userDao.findByEmailAndPassword(user.getEmail(), user.getPassword());
+        User user1 = userDao.findByEmailAndPassword(user.getEmail(), user.getPassword());
+        return user1 != null ? "登陆成功" : "登陆失败";
     }
 
     @Override
-    public User register(UserVo userVo) {
+    public String register(UserVo userVo) {
         if (null == userVo || StringUtils.isEmpty(userVo.getName())
                 || StringUtils.isEmpty(userVo.getEmail())
                 || StringUtils.isEmpty(userVo.getPassword())
                 || StringUtils.isEmpty(userVo.getPassword1())) {
-            return null;
+            return "必填项不能为空";
         }
         if (!userVo.getPassword().equals(userVo.getPassword1())) {
-            return null;
+            return "确认密码错误";
+        }
+        User existUser = userDao.findByNameOrEmail(userVo.getName(), userVo.getEmail());
+        if (null != existUser) {
+            return "用户已存在";
         }
         User user = new User(userVo);
         user.setCreateTime(new Date());
         user.setModifyTime(new Date());
-        return userDao.save(user);
+        userDao.save(user);
+        return "注册成功";
+    }
+
+    @Override
+    public User getUser(String email, String password) {
+        return userDao.findByEmailAndPassword(email, password);
     }
 
 }

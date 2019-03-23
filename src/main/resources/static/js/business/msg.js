@@ -3,9 +3,14 @@ $(function () {
     $('#save-msg').on('click', function () {
         var userId = localStorage.getItem("userId");
         var title = $('#title').val();
-        var tags = $('#tags').val();
         var comment = $('#comment').val();
-        console.log(tags);
+        var tags = document.getElementsByName("tags");
+        for (i in tags) {
+            if (tags[i].checked) {
+                console.log(tags[i]);
+            }
+        }
+
         if (undefined === title || '' === title) {
             alert("标题不能为空");
             return;
@@ -30,8 +35,7 @@ $(function () {
             cache: false,
             success: function (data) {
                 alert(data);
-                $('#title').html = '';
-                $('#comment').html = '';
+                window.location.href = "index.html";
             }
         });
     });
@@ -45,7 +49,7 @@ $(function () {
         success: function (data) {
             if (data) {
                 data.forEach(function (v) {
-                    tag_div.append("<input type='checkbox' id='tags' value='" + v.name + "'/>"
+                    tag_div.append("<input type='checkbox' name='tags' value='" + v.name + "'/>"
                         + "<a href='javascript:void(0);' class='btn btn-mini' onclick='checkTag(this)'>" + v.name + "</a>  ");
                 });
             }

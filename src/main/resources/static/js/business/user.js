@@ -58,6 +58,25 @@ function login() {
         },
         cache: false,
         success: function (data) {
+            if (data && data === '登陆成功') {
+                getUser(email, password);
+            } else {
+                alert(data);
+            }
+        }
+    });
+}
+
+function getUser(email, password) {
+    $.ajax({
+        url: '/user/getUser',
+        type: 'POST',
+        data: {
+            email: email,
+            password: password
+        },
+        cache: false,
+        success: function (data) {
             localStorage.setItem("userId", data.id);
             localStorage.setItem("userName", data.name);
             window.location.reload();
@@ -98,8 +117,14 @@ function register() {
             password1: password1
         },
         cache: false,
-        success: function () {
-            window.location.reload();
+        success: function (data) {
+            console.log(data);
+            if (data && data === '注册成功') {
+                // window.location.reload();
+            } else {
+                alert(data);
+            }
+
         }
     });
 }

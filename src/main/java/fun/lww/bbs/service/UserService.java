@@ -5,7 +5,9 @@ import fun.lww.bbs.vo.UserVo;
 
 public interface UserService {
 
-    User login(User user);
+    String login(User user);
 
-    User register(UserVo userVo);
+    String register(UserVo userVo);
+
+    User getUser(String email, String password);
 }

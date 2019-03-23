@@ -10,7 +10,7 @@ $(function () {
                 data.forEach(function (v) {
                     featured.append("<li class='article-entry standard'>"
                         + "<h4><a href='javascript:void(0);' onclick='toReview(" + v.id + ")'>" + v.title + "</a></h4>"
-                        + "<span class='article-meta'>" + v.createTime + " in <a href='#' title='"
+                        + "<span class='article-meta'>" + v.createTime + " in <a href='javascript:void(0);' title='"
                         + v.tag + "'>" + v.tag + "</a></span>"
                         + "<span class='like-count'>" + v.heat + "</span></li>");
                 });
@@ -29,7 +29,7 @@ $(function () {
                 data.forEach(function (v) {
                     latest.append("<li class='article-entry standard'>"
                         + "<h4><a href='javascript:void(0);' onclick='toReview(" + v.id + ")'>" + v.title + "</a></h4>"
-                        + "<span class='article-meta'>" + v.createTime + " in <a href='#' title='"
+                        + "<span class='article-meta'>" + v.createTime + " in <a href='javascript:void(0);' title='"
                         + v.tag + "'>" + v.tag + "</a></span>"
                         + "<span class='like-count'>" + v.heat + "</span></li>");
                 });
@@ -46,7 +46,7 @@ $(function () {
         success: function (data) {
             if (data) {
                 data.forEach(function (v) {
-                    tag.append("<a href='#' class='btn btn-mini'>" + v.name + "</a>")
+                    tag.append("<a href='javascript:void(0);' class='btn btn-mini'>" + v.name + "</a>")
                 });
             }
         }
