@@ -2,18 +2,28 @@ package fun.lww.bbs.vo;
 
 public class ReviewVo {
 
-    private Integer msgId;
+    private Integer id;
+
+    private Integer messageId;
 
     private Integer userId;
 
-    private String comment;
+    private String content;
 
-    public Integer getMsgId() {
-        return msgId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setMsgId(Integer msgId) {
-        this.msgId = msgId;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(Integer messageId) {
+        this.messageId = messageId;
     }
 
     public Integer getUserId() {
@@ -24,11 +34,11 @@ public class ReviewVo {
         this.userId = userId;
     }
 
-    public String getComment() {
-        return comment;
+    public String getContent() {
+        return content;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setContent(String content) {
+        this.content = content;
     }
 }

@@ -1,0 +1,62 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fun.lww.bbs.dao.MessageDao">
+
+    <resultMap type="fun.lww.bbs.bean.Message" id="message">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="tag" property="tag"/>
+        <result column="heat" property="heat"/>
+        <result column="user_id" property="userId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <sql id="columns">
+        id, title, content, user_id, tag, heat, create_time, modify_time
+    </sql>
+
+    <sql id="columnNonId">
+        title, content, user_id, tag, heat, create_time, modify_time
+    </sql>
+
+    <insert id="insert" parameterType="fun.lww.bbs.bean.Message" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO message (<include refid="columnNonId"/>)
+        VALUES (#{title}, #{content}, #{userId}, #{tag}, #{heat}, NOW(), NOW())
+    </insert>
+
+    <update id="update" parameterType="fun.lww.bbs.bean.Message">
+        UPDATE message SET title = #{title}, content = #{content}, tag = #{tag}, modify_time = NOW()
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM message WHERE id = #{id}
+    </delete>
+
+    <select id="findByContent" resultMap="message">
+        SELECT <include refid="columns"/> FROM message
+        WHERE 1=1
+        <if test="content != null and content != ''">
+            AND content like CONCAT('%', #{content}, '%')
+        </if>
+        <if test="type != null and type != ''">
+            <choose>
+                <when test="type == 'latest'">
+                    ORDER BY create_time DESC
+                </when>
+                <when test="type == 'featured'">
+                    ORDER BY heat DESC
+                </when>
+            </choose>
+        </if>
+        LIMIT #{size}
+    </select>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="message">
+        SELECT <include refid="columns"/> FROM message WHERE id = #{id}
+    </select>
+
+</mapper>

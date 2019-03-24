@@ -1,30 +1,34 @@
-package fun.lww.bbs.entity;
+package fun.lww.bbs.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 标签实体
+ * 用户实体
  * create by liweiwei on 2019/03/16
  */
-@Entity
-@Table(name = "tag")
-public class Tag implements Serializable {
+public class User {
 
     /**
      * id
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     /**
-     * 名称
+     * 用户名
      */
     private String name;
+
+    /**
+     * 密码
+     */
+    private String password;
+
+    /**
+     * 邮箱
+     */
+    private String email;
 
     /**
      * 创建时间
@@ -54,6 +58,22 @@ public class Tag implements Serializable {
         this.name = name;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -69,6 +89,4 @@ public class Tag implements Serializable {
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
     }
-
 }
-

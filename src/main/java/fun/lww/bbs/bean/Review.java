@@ -1,24 +1,18 @@
-package fun.lww.bbs.entity;
+package fun.lww.bbs.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 对话信息
  * create by liweiwei on 2019/03/16
  */
-@Entity
-@Table(name = "review")
-public class Review implements Serializable {
+public class Review {
 
     /**
      * id
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     /**
@@ -34,7 +28,7 @@ public class Review implements Serializable {
     /**
      * 发送用户
      */
-    private String userName;
+    private Integer userId;
 
     /**
      * 创建时间
@@ -72,12 +66,12 @@ public class Review implements Serializable {
         this.msgId = msgId;
     }
 
-    public String getUserName() {
-        return userName;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Date getCreateTime() {

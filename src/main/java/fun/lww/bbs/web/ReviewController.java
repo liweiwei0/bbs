@@ -1,11 +1,13 @@
 package fun.lww.bbs.web;
 
-import fun.lww.bbs.entity.Review;
+import fun.lww.bbs.bean.Review;
+import fun.lww.bbs.common.ResultBean;
 import fun.lww.bbs.service.ReviewService;
 import fun.lww.bbs.vo.ReviewVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,23 +27,31 @@ public class ReviewController {
      * 查找评论列表
      */
     @RequestMapping(value = "/getReview", method = RequestMethod.GET)
-    public List<Review> getReviewByMsgId(Integer msgId) {
-        return reviewService.getReviewByMsgId(msgId);
+    public ResultBean<List<Review>> getReviewByMessageId(@RequestParam(value = "msgId") Integer messageId) {
+        return new ResultBean<>(reviewService.getReviewByMessageId(messageId));
     }
 
     /**
      * 保存评论信息
      */
-    @RequestMapping(value = "/saveReview", method = RequestMethod.POST)
-    public String saveReview(ReviewVo reviewVo) {
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public ResultBean<String> save(ReviewVo reviewVo) {
         return reviewService.save(reviewVo);
     }
 
     /**
-     * 保存评论信息
+     * 修改评论信息
      */
-    @RequestMapping(value = "/delReview", method = RequestMethod.POST)
-    public String delReview(Integer id) {
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public ResultBean<String> update(ReviewVo reviewVo) {
+        return reviewService.update(reviewVo);
+    }
+
+    /**
+     * 删除评论信息
+     */
+    @RequestMapping(value = "/del", method = RequestMethod.POST)
+    public ResultBean<String> del(Integer id) {
         return reviewService.delete(id);
     }
 

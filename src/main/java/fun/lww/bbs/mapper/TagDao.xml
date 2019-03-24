@@ -1,0 +1,26 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fun.lww.bbs.dao.TagDao">
+
+    <resultMap type="fun.lww.bbs.bean.Tag" id="tag">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <sql id="columns">
+        id, `name`, create_time, modify_time
+    </sql>
+
+    <sql id="columnNonId">
+        `name`, create_time, modify_time
+    </sql>
+
+    <select id="findAll" resultMap="tag">
+        SELECT <include refid="columns"/> FROM tag
+    </select>
+
+</mapper>

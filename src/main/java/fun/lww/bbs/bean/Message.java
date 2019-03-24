@@ -1,31 +1,23 @@
-package fun.lww.bbs.entity;
+package fun.lww.bbs.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 消息实体
  * create by liweiwei on 2019/03/16
  */
-@Entity
-@Table(name = "msg")
-public class Msg implements Serializable {
+public class Message {
 
     /**
      * id
      */
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     /**
      * 标题
      */
-    @Length(max = 50)
     private String title;
 
     /**

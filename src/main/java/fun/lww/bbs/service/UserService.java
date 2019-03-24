@@ -1,13 +1,12 @@
 package fun.lww.bbs.service;
 
-import fun.lww.bbs.entity.User;
+import fun.lww.bbs.bean.User;
+import fun.lww.bbs.common.ResultBean;
 import fun.lww.bbs.vo.UserVo;
 
 public interface UserService {
 
-    String login(User user);
+    ResultBean<User> register(UserVo userVo);
 
-    String register(UserVo userVo);
-
-    User getUser(String email, String password);
+    ResultBean<User> login(String email, String password);
 }

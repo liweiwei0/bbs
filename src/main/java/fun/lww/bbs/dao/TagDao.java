@@ -1,8 +1,9 @@
 package fun.lww.bbs.dao;
 
-import fun.lww.bbs.entity.Tag;
-import org.springframework.data.jpa.repository.JpaRepository;
+import fun.lww.bbs.bean.Tag;
+import org.springframework.stereotype.Repository;
 
-public interface TagDao extends JpaRepository<Tag, Integer> {
+@Repository
+public interface TagDao extends BaseDao<Tag>{
 
 }

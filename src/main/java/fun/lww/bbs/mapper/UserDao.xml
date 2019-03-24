@@ -1,0 +1,40 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fun.lww.bbs.dao.UserDao">
+
+    <resultMap type="fun.lww.bbs.bean.User" id="user">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="create_time" property="createTime"/>
+        <result column="modify_time" property="modifyTime"/>
+    </resultMap>
+
+    <sql id="columns">
+        id, `name`, password, email, create_time, modify_time
+    </sql>
+
+    <sql id="columnNonId">
+        `name`, password, email, create_time, modify_time
+    </sql>
+
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO `user` (<include refid="columnNonId"/>)
+        VALUES (#{name}, #{password}, #{email}, NOW(), NOW())
+    </insert>
+
+    <select id="findByEmail" parameterType="java.lang.String" resultMap="user">
+        SELECT <include refid="columns"/> FROM `user` WHERE email = #{email}
+    </select>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="user">
+        SELECT <include refid="columns"/> FROM `user` WHERE id = #{id}
+    </select>
+
+
+
+
+</mapper>

@@ -8,11 +8,6 @@ spring:
     static-path-pattern: /static/**
   application:
     name: bbs
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    open-in-view: false
 server:
   port: 80
   servlet:

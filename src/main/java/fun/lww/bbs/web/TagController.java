@@ -1,6 +1,7 @@
 package fun.lww.bbs.web;
 
-import fun.lww.bbs.entity.Tag;
+import fun.lww.bbs.bean.Tag;
+import fun.lww.bbs.common.ResultBean;
 import fun.lww.bbs.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,7 @@ public class TagController {
      * 标签列表
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<Tag> list() {
-        return tagService.list();
+    public ResultBean<List<Tag>> list() {
+        return new ResultBean<>(tagService.list());
     }
 }

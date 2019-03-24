@@ -1,11 +1,12 @@
 package fun.lww.bbs.dao;
 
-import fun.lww.bbs.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import fun.lww.bbs.bean.User;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
-public interface UserDao extends JpaRepository<User, Integer> {
+@Repository
+public interface UserDao extends BaseDao<User> {
 
-    User findByEmailAndPassword(String email, String password);
+    User findByEmail(@Param("email") String email);
 
-    User findByNameOrEmail(String name, String email);
 }

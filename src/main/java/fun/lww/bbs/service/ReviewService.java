@@ -1,15 +1,18 @@
 package fun.lww.bbs.service;
 
-import fun.lww.bbs.entity.Review;
+import fun.lww.bbs.bean.Review;
+import fun.lww.bbs.common.ResultBean;
 import fun.lww.bbs.vo.ReviewVo;
 
 import java.util.List;
 
 public interface ReviewService {
 
-    List<Review> getReviewByMsgId(Integer msgId);
+    List<Review> getReviewByMessageId(Integer msgId);
 
-    String save(ReviewVo reviewVo);
+    ResultBean<String> save(ReviewVo reviewVo);
 
-    String delete(Integer id);
+    ResultBean<String> delete(Integer id);
+
+    ResultBean<String> update(ReviewVo reviewVo);
 }

@@ -2,7 +2,9 @@ package fun.lww.bbs.vo;
 
 import java.util.List;
 
-public class MsgVo {
+public class MessageVo {
+
+    private Integer id;
 
     private Integer userId;
 
@@ -10,7 +12,15 @@ public class MsgVo {
 
     private List<String> tags;
 
-    private String comment;
+    private String content;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -36,11 +46,11 @@ public class MsgVo {
         this.tags = tags;
     }
 
-    public String getComment() {
-        return comment;
+    public String getContent() {
+        return content;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setContent(String content) {
+        this.content = content;
     }
 }

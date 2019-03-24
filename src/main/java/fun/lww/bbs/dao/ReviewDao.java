@@ -1,12 +1,13 @@
 package fun.lww.bbs.dao;
 
-import fun.lww.bbs.entity.Review;
-import org.springframework.data.jpa.repository.JpaRepository;
+import fun.lww.bbs.bean.Review;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface ReviewDao extends JpaRepository<Review, Integer> {
+@Repository
+public interface ReviewDao extends BaseDao<Review> {
 
-    List<Review> findByMsgIdOrderByCreateTimeAsc(Integer msgId);
+    List<Review> findByMessageId(Integer messageId);
 
 }
