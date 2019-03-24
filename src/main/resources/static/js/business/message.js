@@ -1,6 +1,6 @@
 $(function () {
     // 保存帖子
-    $('#save-msg').on('click', function () {
+    $('#save-message').on('click', function () {
         var userId = localStorage.getItem("userId");
         var title = $('#title').val();
         var comment = $('#comment').val();
@@ -47,8 +47,8 @@ $(function () {
         type: 'GET',
         cache: false,
         success: function (data) {
-            if (data) {
-                data.forEach(function (v) {
+            if (data && data.code === 1) {
+                data.data.forEach(function (v) {
                     tag_div.append("<input type='checkbox' name='tags' value='" + v.name + "'/>"
                         + "<a href='javascript:void(0);' class='btn btn-mini' onclick='checkTag(this)'>" + v.name + "</a>  ");
                 });

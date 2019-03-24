@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 
+    <classPathEntry location="/Users/liweiwei/projects/bbs/src/main/resources/lib/mysql-connector-java-5.1.47.jar" />
     <context id="Tables" targetRuntime="MyBatis3">
 
         <!--自动实现Serializable接口-->
@@ -16,7 +17,7 @@
         <!--数据库基本信息-->
         <jdbcConnection
                 driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://127.0.0.1:3306/bbs"
+                connectionURL="jdbc:mysql://127.0.0.1:3306/bbs?useSSL=false"
                 userId="root"
                 password="12345678">
         </jdbcConnection>

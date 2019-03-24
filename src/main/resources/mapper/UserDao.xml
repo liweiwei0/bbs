@@ -34,6 +34,15 @@
         SELECT <include refid="columns"/> FROM `user` WHERE id = #{id}
     </select>
 
+    <select id="findByIds" resultMap="user">
+        SELECT <include refid="columns"/> FROM `user` WHERE 1=1
+        <if test="userIds != null and userIds.size > 0">
+            AND id IN
+            <foreach collection="userIds" item="userId" open="(" separator="," close=")">
+                #{userId}
+            </foreach>
+        </if>
+    </select>
 
 
 

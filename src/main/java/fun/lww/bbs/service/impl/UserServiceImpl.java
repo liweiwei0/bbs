@@ -1,5 +1,6 @@
 package fun.lww.bbs.service.impl;
 
+import fun.lww.bbs.common.MD5Util;
 import fun.lww.bbs.common.ResultBean;
 import fun.lww.bbs.dao.UserDao;
 import fun.lww.bbs.bean.User;
@@ -7,7 +8,6 @@ import fun.lww.bbs.service.UserService;
 import fun.lww.bbs.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
         if (null == user) {
             return new ResultBean<>(2, "用户不存在");
         }
-        if (!MD5Encoder.encode(password.getBytes()).equals(user.getPassword())) {
+        if (!MD5Util.calc(password).equals(user.getPassword())) {
             return new ResultBean<>(2, "密码错误");
         }
         return new ResultBean<>(1, "登陆成功", user);
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setName(userVo.getName());
         user.setEmail(userVo.getEmail());
-        user.setPassword(MD5Encoder.encode(userVo.getPassword().getBytes()));
+        user.setPassword(MD5Util.calc(userVo.getPassword()));
         userDao.insert(user);
         return new ResultBean<>(1, "注册成功", user);
     }

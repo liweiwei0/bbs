@@ -6,8 +6,8 @@ $(function () {
         type: 'GET',
         cache: false,
         success: function (data) {
-            if (data) {
-                data.forEach(function (v) {
+            if (data && data.code === 1) {
+                data.data.forEach(function (v) {
                     featured.append("<li class='article-entry standard'>"
                         + "<h4><a href='javascript:void(0);' onclick='toReview(" + v.id + ")'>" + v.title + "</a></h4>"
                         + "<span class='article-meta'>" + v.createTime + " in <a href='javascript:void(0);' title='"
@@ -25,8 +25,8 @@ $(function () {
         type: 'GET',
         cache: false,
         success: function (data) {
-            if (data) {
-                data.forEach(function (v) {
+            if (data && data.code === 1) {
+                data.data.forEach(function (v) {
                     latest.append("<li class='article-entry standard'>"
                         + "<h4><a href='javascript:void(0);' onclick='toReview(" + v.id + ")'>" + v.title + "</a></h4>"
                         + "<span class='article-meta'>" + v.createTime + " in <a href='javascript:void(0);' title='"
@@ -44,8 +44,8 @@ $(function () {
         type: 'GET',
         cache: false,
         success: function (data) {
-            if (data) {
-                data.forEach(function (v) {
+            if (data && data.code === 1) {
+                data.data.forEach(function (v) {
                     tag.append("<a href='javascript:void(0);' class='btn btn-mini'>" + v.name + "</a>")
                 });
             }

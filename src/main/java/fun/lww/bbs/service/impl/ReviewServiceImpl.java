@@ -14,8 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -31,11 +34,26 @@ public class ReviewServiceImpl implements ReviewService {
     private UserDao userDao;
 
     @Override
-    public List<Review> getReviewByMessageId(Integer messageId) {
+    public List<ReviewVo> getReviewByMessageId(Integer messageId) {
+        List<ReviewVo> result = Lists.newArrayList();
         if (null == messageId) {
-            return Lists.newArrayList();
+            return result;
         }
-        return reviewDao.findByMessageId(messageId);
+        List<Review> list = reviewDao.findByMessageId(messageId);
+        if (CollectionUtils.isEmpty(list)) {
+            return result;
+        }
+
+        List<Integer> userIds = list.stream().map(Review::getUserId).collect(Collectors.toList());
+        List<User> users = userDao.findByIds(userIds);
+        Map<Integer, String> userMap = users.stream().collect(Collectors.toMap(User::getId, User::getName));
+
+        list.forEach(it -> {
+            ReviewVo reviewVo = new ReviewVo(it);
+            reviewVo.setUserName(userMap.get(it.getUserId()));
+            result.add(reviewVo);
+        });
+        return result;
     }
 
     @Override

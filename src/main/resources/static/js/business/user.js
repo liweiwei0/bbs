@@ -1,11 +1,12 @@
 $(function () {
     var userId = localStorage.getItem("userId");
     var userName = localStorage.getItem("userName");
+
     if (userId && userName) {
         $('#user-info').html("<h3 class='title'>用户信息</h3><p class='intro'>用户: " + userName
             + "</p><p class='intro'><a href='javascript:void(0);' onclick='layout()'>  登出  </a></p>");
-        $('#userId').value = userId;
-        $('#single-1').attr('href', "msg.html?userId=" + userId);
+        $('#user-btn').append("<a href='articles-list.html' id='articles-list' class='btn btn-mini'"
+            + " style='width:30%;margin-left:2%'>我的</a>");
     } else {
         $('#user-info').append("<p class='intro'>邮箱: <input type='text' id='login-email' value=''/></p>"
             + "<p class='intro'>密码: <input type='password' id='login-password' value=''/></p>"
@@ -58,28 +59,19 @@ function login() {
         },
         cache: false,
         success: function (data) {
-            if (data && data === '登陆成功') {
-                getUser(email, password);
-            } else {
-                alert(data);
+            if (data) {
+                if (data.code === 1) {
+                    alert(data.msg);
+                    localStorage.setItem("userId", data.data.id);
+                    localStorage.setItem("userName", data.data.name);
+                    $('#user-info').html("<h3 class='title'>用户信息</h3><p class='intro'>用户: " + data.data.name
+                        + "</p><p class='intro'><a href='javascript:void(0);' onclick='layout()'>  登出  </a></p>");
+                    $('#user-btn').append("<a href='articles-list.html' id='articles-list' class='btn btn-mini'"
+                        + " style='width:30%;margin-left:2%'>我的</a>");
+                } else if (data.code === 2) {
+                    alert(data.msg);
+                }
             }
-        }
-    });
-}
-
-function getUser(email, password) {
-    $.ajax({
-        url: '/user/getUser',
-        type: 'POST',
-        data: {
-            email: email,
-            password: password
-        },
-        cache: false,
-        success: function (data) {
-            localStorage.setItem("userId", data.id);
-            localStorage.setItem("userName", data.name);
-            window.location.reload();
         }
     });
 }
@@ -106,6 +98,10 @@ function register() {
         alert("确认密码不能为空");
         return;
     }
+    if (password !== password1) {
+        alert("确认密码错误");
+        return;
+    }
 
     $.ajax({
         url: '/user/register',
@@ -118,13 +114,19 @@ function register() {
         },
         cache: false,
         success: function (data) {
-            console.log(data);
-            if (data && data === '注册成功') {
-                // window.location.reload();
-            } else {
-                alert(data);
+            if (data) {
+                if (data.code === 1) {
+                    alert(data.msg);
+                    localStorage.setItem("userId", data.data.id);
+                    localStorage.setItem("userName", data.data.name);
+                    $('#user-info').html("<h3 class='title'>用户信息</h3><p class='intro'>用户: " + data.data.name
+                        + "</p><p class='intro'><a href='javascript:void(0);' onclick='layout()'>  登出  </a></p>");
+                    $('#user-btn').append("<a href='articles-list.html' id='articles-list' class='btn btn-mini'"
+                        + " style='width:30%;margin-left:2%'>我的</a>");
+                } else if (data.code === 2) {
+                    alert(data.msg);
+                }
             }
-
         }
     });
 }

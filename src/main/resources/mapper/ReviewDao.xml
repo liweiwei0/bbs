@@ -39,6 +39,7 @@
     </select>
 
     <select id="findByMessageId" parameterType="java.lang.Integer" resultMap="review">
-        SELECT <include refid="columns"/> FROM review WHERE msg_id = #{messageId}
+        SELECT <include refid="columns"/> FROM review
+        WHERE msg_id = #{messageId} ORDER BY create_time ASC
     </select>
 </mapper>

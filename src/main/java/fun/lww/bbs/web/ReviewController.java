@@ -27,7 +27,7 @@ public class ReviewController {
      * 查找评论列表
      */
     @RequestMapping(value = "/getReview", method = RequestMethod.GET)
-    public ResultBean<List<Review>> getReviewByMessageId(@RequestParam(value = "msgId") Integer messageId) {
+    public ResultBean<List<ReviewVo>> getReviewByMessageId(Integer messageId) {
         return new ResultBean<>(reviewService.getReviewByMessageId(messageId));
     }
 
