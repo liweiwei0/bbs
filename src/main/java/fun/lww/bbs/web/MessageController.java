@@ -27,7 +27,7 @@ public class MessageController {
      * 最新信息
      */
     @RequestMapping(value = "/getLatest", method = RequestMethod.GET)
-    public ResultBean<List<Message>> getLatest(@RequestParam(value = "content", required = false)String content,
+    public ResultBean<List<Message>> getLatest(@RequestParam(value = "content", required = false) String content,
                                 @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         return new ResultBean<>(messageService.getLatest(content, size));
     }
@@ -36,7 +36,7 @@ public class MessageController {
      * 精选信息 最热信息
      */
     @RequestMapping(value = "/getFeatured", method = RequestMethod.GET)
-    public ResultBean<List<Message>> getFeatured(@RequestParam(value = "content", required = false)String content,
+    public ResultBean<List<Message>> getFeatured(@RequestParam(value = "content", required = false) String content,
                                      @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         return new ResultBean<>(messageService.getFeatured(content, size));
     }

@@ -2,7 +2,7 @@ $(function () {
     // 刷新精选内容
     var featured = $('#featured-ul');
     $.ajax({
-        url: '/msg/getFeatured',
+        url: '/message/getFeatured',
         type: 'GET',
         cache: false,
         success: function (data) {
@@ -21,7 +21,7 @@ $(function () {
     // 刷新最新消息
     var latest = $('#latest-ul');
     $.ajax({
-        url: '/msg/getLatest',
+        url: '/message/getLatest',
         type: 'GET',
         cache: false,
         success: function (data) {
@@ -53,7 +53,7 @@ $(function () {
     });
 });
 
-function toReview(msgId) {
-    localStorage.setItem("msgId", msgId);
+function toReview(messageId) {
+    localStorage.setItem("messageId", messageId);
     window.location.href = "review.html";
 }
