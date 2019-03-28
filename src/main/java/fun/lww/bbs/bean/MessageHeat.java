@@ -5,30 +5,26 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 /**
- * 对话信息
+ * 消息点赞记录
  * create by liweiwei on 2019/03/16
  */
-public class Review {
+public class MessageHeat {
 
     /**
      * id
      */
     private Integer id;
 
-    /**
-     * 回复信息
-     */
-    private String content;
 
     /**
-     * 消息ID
-     */
-    private Integer messageId;
-
-    /**
-     * 发送用户
+     * 作者
      */
     private Integer userId;
+
+    /**
+     * 帖子ID
+     */
+    private Integer messageId;
 
     /**
      * 创建时间
@@ -50,12 +46,12 @@ public class Review {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getMessageId() {
@@ -64,14 +60,6 @@ public class Review {
 
     public void setMessageId(Integer messageId) {
         this.messageId = messageId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 
     public Date getCreateTime() {
@@ -89,5 +77,6 @@ public class Review {
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
     }
+
 }
 

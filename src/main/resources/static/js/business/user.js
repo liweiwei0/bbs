@@ -1,6 +1,6 @@
 $(function () {
-    var userId = localStorage.getItem("userId");
-    var userName = localStorage.getItem("userName");
+    var userId = sessionStorage.getItem("userId");
+    var userName = sessionStorage.getItem("userName");
 
     if (userId && userName) {
         $('#user-info').html("<h3 class='title'>用户信息</h3><p class='intro'>用户: " + userName
@@ -34,19 +34,19 @@ function toLogin() {
 }
 
 function layout() {
-    localStorage.removeItem("userId");
-    localStorage.removeItem("userName");
+    sessionStorage.removeItem("userId");
+    sessionStorage.removeItem("userName");
     window.location.reload();
 }
 
 function login() {
     var email = $('#login-email').val();
     var password = $('#login-password').val();
-    if (undefined === email || '' === email) {
+    if (undefined === email || null === email || '' === email) {
         alert("邮箱不能为空");
         return;
     }
-    if (undefined === password || '' === password) {
+    if (undefined === password || null === password || '' === password) {
         alert("密码不能为空");
         return;
     }
@@ -62,8 +62,8 @@ function login() {
             if (data) {
                 if (data.code === 1) {
                     alert(data.msg);
-                    localStorage.setItem("userId", data.data.id);
-                    localStorage.setItem("userName", data.data.name);
+                    sessionStorage.setItem("userId", data.data.id);
+                    sessionStorage.setItem("userName", data.data.name);
                     $('#user-info').html("<h3 class='title'>用户信息</h3><p class='intro'>用户: " + data.data.name
                         + "</p><p class='intro'><a href='javascript:void(0);' onclick='layout()'>  登出  </a></p>");
                     $('#user-btn').append("<a href='articles-list.html' id='articles-list' class='btn btn-mini'"
@@ -82,19 +82,19 @@ function register() {
     var password = $('#login-password').val();
     var password1 = $('#login-password1').val();
 
-    if (undefined === name || '' === name) {
+    if (undefined === name || null === name || '' === name) {
         alert("用户名不能为空");
         return;
     }
-    if (undefined === email || '' === email) {
+    if (undefined === email || null === email || '' === email) {
         alert("邮箱不能为空");
         return;
     }
-    if (undefined === password || '' === password) {
+    if (undefined === password || null === password || '' === password) {
         alert("密码不能为空");
         return;
     }
-    if (undefined === password1 || '' === password1) {
+    if (undefined === password1 || null === password1 || '' === password1) {
         alert("确认密码不能为空");
         return;
     }
@@ -117,8 +117,8 @@ function register() {
             if (data) {
                 if (data.code === 1) {
                     alert(data.msg);
-                    localStorage.setItem("userId", data.data.id);
-                    localStorage.setItem("userName", data.data.name);
+                    sessionStorage.setItem("userId", data.data.id);
+                    sessionStorage.setItem("userName", data.data.name);
                     $('#user-info').html("<h3 class='title'>用户信息</h3><p class='intro'>用户: " + data.data.name
                         + "</p><p class='intro'><a href='javascript:void(0);' onclick='layout()'>  登出  </a></p>");
                     $('#user-btn').append("<a href='articles-list.html' id='articles-list' class='btn btn-mini'"

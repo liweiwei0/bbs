@@ -72,4 +72,5 @@ public class MessageController {
     public ResultBean<String> delete(Integer id) {
         return messageService.delete(id);
     }
+
 }

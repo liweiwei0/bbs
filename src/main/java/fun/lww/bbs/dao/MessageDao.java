@@ -13,4 +13,5 @@ public interface MessageDao extends BaseDao<Message> {
                                 @Param("type") String type,
                                 @Param("size") int size);
 
+    void addHeat(@Param("id") Integer id);
 }

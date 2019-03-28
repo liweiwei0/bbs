@@ -76,7 +76,7 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = new Review();
         review.setUserId(user.getId());
         review.setContent(reviewVo.getContent());
-        review.setMsgId(message.getId());
+        review.setMessageId(message.getId());
         reviewDao.insert(review);
         return new ResultBean<>(1,"评论成功");
     }

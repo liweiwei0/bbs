@@ -1,7 +1,7 @@
 $(function () {
-    var messageId = localStorage.getItem("messageId");
-    var userId = localStorage.getItem("userId");
-    var userName = localStorage.getItem("userName");
+    var messageId = sessionStorage.getItem("messageId");
+    var userId = sessionStorage.getItem("userId");
+    var userName = sessionStorage.getItem("userName");
 
     // 获取精选内容
     var featured = $('#featured-ul');
@@ -36,6 +36,14 @@ $(function () {
                 $('#msg-tag').html(message.tag);
                 $('#msg-content').html(message.content);
                 $('#msg-heat').html(message.heat);
+                $('#add-heat').html(message.heat);
+
+                var tags = message.tag.split(' & ');
+                if (tags && tags.length > 0) {
+                    for (index in tags) {
+                        $('#tags-span').append("<a href=\"javascript:void(0);\" rel=\"tag\">" + tags[index] + "、 </a>");
+                    }
+                }
             }
         }
     });
@@ -80,25 +88,74 @@ $(function () {
 
     // 保存评论
     $('#save-review').on('click', function () {
-        var messageId = localStorage.getItem("messageId");
-        var userId = localStorage.getItem("userId");
+        var messageId = sessionStorage.getItem("messageId");
+        var userId = sessionStorage.getItem("userId");
         var comment = $('#comment').val();
+        if (undefined === messageId || null === messageId || '' === messageId) {
+            alert("页面超时，请刷新后评论");
+            return;
+        }
+        if (undefined === userId || null === userId || '' === userId) {
+            alert("登陆后才可以发表评论");
+            return;
+        }
+        if (undefined === comment || null === comment || '' === comment) {
+            alert("评论不能为空");
+            return;
+        }
+
         $.ajax({
             url: '/review/save',
             type: 'POST',
             data: {
                 messageId: messageId,
                 userId: userId,
-                connect: comment
+                content: comment
             },
             cache: false,
             success: function (data) {
-                alert(data);
-                window.location.reload();
+                if (data) {
+                    if (data.code === 1) {
+                        alert(data.msg);
+                        window.location.reload();
+                    } else if (data.code === 2) {
+                        alert(data.msg)
+                    }
+                }
+
             }
         });
     });
 
+    // 点赞
+    $('#add-heat').on('click', function () {
+        var message_id = sessionStorage.getItem('messageId');
+        var user_id = sessionStorage.getItem('userId');
+        if (undefined === user_id || null === user_id || '' === user_id) {
+            alert("登陆后才可以点赞哦 👍");
+            return;
+        }
+        $.ajax({
+            url: '/messageHeat/save',
+            type: 'POST',
+            data: {
+                messageId: message_id,
+                userId: user_id
+            },
+            cache: false,
+            success: function (data) {
+                if (data) {
+                    if (data.code === 1) {
+                        var heat = parseInt($('#add-heat').text()) + 1;
+                        $('#add-heat').text(heat);
+                        $('#msg-heat').text(heat);
+                    } else if (data.code === 2) {
+                        alert(data.msg);
+                    }
+                }
+            }
+        });
+    });
 });
 
 // 删除评论
@@ -117,6 +174,6 @@ function delReview(id) {
 }
 
 function toReview(messageId) {
-    localStorage.setItem("messageId", messageId);
+    sessionStorage.setItem("messageId", messageId);
     window.location.href = "review.html";
 }

@@ -59,4 +59,7 @@
         SELECT <include refid="columns"/> FROM message WHERE id = #{id}
     </select>
 
+    <update id="addHeat" parameterType="java.lang.Integer">
+        UPDATE message SET heat = heat + 1 WHERE id = #{id}
+    </update>
 </mapper>

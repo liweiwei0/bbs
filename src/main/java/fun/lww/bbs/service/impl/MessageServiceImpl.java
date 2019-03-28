@@ -1,5 +1,6 @@
 package fun.lww.bbs.service.impl;
 
+import com.google.common.collect.Lists;
 import fun.lww.bbs.bean.Message;
 import fun.lww.bbs.bean.User;
 import fun.lww.bbs.common.ResultBean;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -26,12 +28,36 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> getLatest(String content, int size) {
-        return messageDao.findByContent(content, "latest", size);
+        List<Message> list = messageDao.findByContent(content, "latest", size);
+        if (!CollectionUtils.isEmpty(list)) {
+            list.forEach(it -> {
+                if (StringUtils.isNotBlank(it.getTag())) {
+                    String[] tags = it.getTag().split(" & ");
+                    if (tags.length > 2) {
+                        it.setTag(tags[0] + " & " + tags[1]);
+                    }
+                }
+            });
+            return list;
+        }
+        return Lists.newArrayList();
     }
 
     @Override
     public List<Message> getFeatured(String content, int size) {
-        return messageDao.findByContent(content, "featured", size);
+        List<Message> list = messageDao.findByContent(content, "featured", size);
+        if (!CollectionUtils.isEmpty(list)) {
+            list.forEach(it -> {
+                if (StringUtils.isNotBlank(it.getTag())) {
+                    String[] tags = it.getTag().split(" & ");
+                    if (tags.length > 2) {
+                        it.setTag(tags[0] + " & " + tags[1]);
+                    }
+                }
+            });
+            return list;
+        }
+        return Lists.newArrayList();
     }
 
     @Override
@@ -61,14 +87,12 @@ public class MessageServiceImpl implements MessageService {
             return new ResultBean<>(2, "发表失败，用户不存在");
         }
 
-        StringBuilder tag = new StringBuilder();
-        messageVo.getTags().forEach(it -> tag.append(it).append(" & "));
         Message message = new Message();
         message.setUserId(messageVo.getUserId());
         message.setContent(messageVo.getContent());
         message.setTitle(messageVo.getTitle());
-        if (tag.length() > 0) {
-            message.setTag(tag.toString().substring(0, tag.length() - 3));
+        if (StringUtils.isNotBlank(messageVo.getTag()) && messageVo.getTag().endsWith(" & ")) {
+            message.setTag(messageVo.getTag().substring(0, messageVo.getTag().length() - 3));
         }
         message.setHeat(0);
         messageDao.insert(message);

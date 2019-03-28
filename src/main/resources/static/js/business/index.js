@@ -54,6 +54,6 @@ $(function () {
 });
 
 function toReview(messageId) {
-    localStorage.setItem("messageId", messageId);
+    sessionStorage.setItem("messageId", messageId);
     window.location.href = "review.html";
 }
