@@ -27,7 +27,7 @@
     </insert>
 
     <update id="update" parameterType="fun.lww.bbs.bean.Review">
-        UPDATE review SET content = #{content}, modify_time = NOW()
+        UPDATE review SET content = #{content}, modify_time = NOW() WHERE id = #{id}
     </update>
 
     <delete id="delete" parameterType="java.lang.Integer">

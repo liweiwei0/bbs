@@ -29,7 +29,7 @@
     </insert>
 
     <update id="update" parameterType="fun.lww.bbs.bean.Message">
-        UPDATE message SET title = #{title}, content = #{content}, tag = #{tag}, modify_time = NOW()
+        UPDATE message SET title = #{title}, content = #{content}, tag = #{tag}, modify_time = NOW() WHERE id = #{id}
     </update>
 
     <delete id="delete" parameterType="java.lang.Integer">
