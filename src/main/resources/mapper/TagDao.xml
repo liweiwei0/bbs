@@ -20,7 +20,7 @@
     </sql>
 
     <select id="findAll" resultMap="tag">
-        SELECT <include refid="columns"/> FROM tag
+        SELECT <include refid="columns"/> FROM tag ORDER BY modify_time DESC
     </select>
 
 </mapper>

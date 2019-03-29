@@ -5,7 +5,7 @@ $(function () {
     if (userId && userName) {
         $('#user-info').html("<h3 class='title'>用户信息</h3><p class='intro'>用户: " + userName
             + "</p><p class='intro'><a href='javascript:void(0);' onclick='layout()'>  登出  </a></p>");
-        $('#user-btn').append("<a href='articles-list.html' id='articles-list' class='btn btn-mini'"
+        $('#user-btn').append("<a href='javascript:void(0);' onclick='toMessage()' class='btn btn-mini'"
             + " style='width:30%;margin-left:2%'>我的</a>");
     } else {
         $('#user-info').append("<p class='intro'>邮箱: <input type='text' id='login-email' value=''/></p>"
@@ -65,10 +65,6 @@ function login() {
                     sessionStorage.setItem("userId", data.data.id);
                     sessionStorage.setItem("userName", data.data.name);
                     window.location.reload();
-                    /*$('#user-info').html("<h3 class='title'>用户信息</h3><p class='intro'>用户: " + data.data.name
-                        + "</p><p class='intro'><a href='javascript:void(0);' onclick='layout()'>  登出  </a></p>");
-                    $('#user-btn').append("<a href='articles-list.html' id='articles-list' class='btn btn-mini'"
-                        + " style='width:30%;margin-left:2%'>我的</a>");*/
                 } else if (data.code === 2) {
                     alert(data.msg);
                 }
@@ -121,14 +117,15 @@ function register() {
                     sessionStorage.setItem("userId", data.data.id);
                     sessionStorage.setItem("userName", data.data.name);
                     window.location.reload();
-                    /*$('#user-info').html("<h3 class='title'>用户信息</h3><p class='intro'>用户: " + data.data.name
-                        + "</p><p class='intro'><a href='javascript:void(0);' onclick='layout()'>  登出  </a></p>");
-                    $('#user-btn').append("<a href='articles-list.html' id='articles-list' class='btn btn-mini'"
-                        + " style='width:30%;margin-left:2%'>我的</a>");*/
                 } else if (data.code === 2) {
                     alert(data.msg);
                 }
             }
         }
     });
+}
+
+function toMessage() {
+    sessionStorage.removeItem('content');
+    window.location.href = 'my-message.html';
 }

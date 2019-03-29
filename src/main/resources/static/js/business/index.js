@@ -1,8 +1,10 @@
 $(function () {
+    var content = sessionStorage.getItem('content') || '';
+    $('#s').val(content);
     // 刷新精选内容
     var featured = $('#featured-ul');
     $.ajax({
-        url: '/message/getFeatured',
+        url: '/message/getFeatured?content=' + content,
         type: 'GET',
         cache: false,
         success: function (data) {
@@ -21,7 +23,7 @@ $(function () {
     // 刷新最新消息
     var latest = $('#latest-ul');
     $.ajax({
-        url: '/message/getLatest',
+        url: '/message/getLatest?content=' + content,
         type: 'GET',
         cache: false,
         success: function (data) {
@@ -50,6 +52,17 @@ $(function () {
                 });
             }
         }
+    });
+
+    $('#message').on('click', function () {
+        sessionStorage.removeItem("messageId");
+        window.location.href = 'message.html';
+    });
+
+    // 查询
+    $('#search').on('click', function () {
+        var s = $('#s').val();
+        sessionStorage.setItem('content', s);
     });
 });
 

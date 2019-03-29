@@ -1,6 +1,7 @@
 package fun.lww.bbs.service;
 
 import fun.lww.bbs.bean.Message;
+import fun.lww.bbs.common.PageBean;
 import fun.lww.bbs.common.ResultBean;
 import fun.lww.bbs.vo.MessageVo;
 
@@ -19,4 +20,8 @@ public interface MessageService {
     ResultBean<String> update(MessageVo messageVo);
 
     ResultBean<String> delete(Integer id);
+
+    PageBean<List<Message>> getMyMessage(MessageVo messageVo);
+
+    PageBean<List<Message>> getMyReviewMessage(MessageVo messageVo);
 }

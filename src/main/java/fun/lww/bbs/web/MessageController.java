@@ -1,6 +1,7 @@
 package fun.lww.bbs.web;
 
 import fun.lww.bbs.bean.Message;
+import fun.lww.bbs.common.PageBean;
 import fun.lww.bbs.common.ResultBean;
 import fun.lww.bbs.service.MessageService;
 import fun.lww.bbs.vo.MessageVo;
@@ -71,6 +72,22 @@ public class MessageController {
     @RequestMapping(value = "/del", method = RequestMethod.POST)
     public ResultBean<String> delete(Integer id) {
         return messageService.delete(id);
+    }
+
+    /**
+     * 获取我的帖子
+     */
+    @RequestMapping(value = "/getMyMessage", method = RequestMethod.POST)
+    public ResultBean<PageBean<List<Message>>> getMyMessage(MessageVo messageVo) {
+        return new ResultBean<>(messageService.getMyMessage(messageVo));
+    }
+
+    /**
+     * 获取我评论的帖子
+     */
+    @RequestMapping(value = "/getMyReviewMessage", method = RequestMethod.POST)
+    public ResultBean<PageBean<List<Message>>> getMyReviewMessage(MessageVo messageVo) {
+        return new ResultBean<>(messageService.getMyReviewMessage(messageVo));
     }
 
 }

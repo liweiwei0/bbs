@@ -40,6 +40,11 @@
 
     <select id="findByMessageId" parameterType="java.lang.Integer" resultMap="review">
         SELECT <include refid="columns"/> FROM review
-        WHERE message_id = #{messageId} ORDER BY create_time ASC
+        WHERE message_id = #{messageId} ORDER BY modify_time ASC
     </select>
+
+    <select id="findIdByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT DISTINCT message_id FROM review WHERE user_id = #{userId}
+    </select>
+
 </mapper>

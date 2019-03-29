@@ -103,41 +103,26 @@
         <div class="row">
 
             <!-- start of page content -->
-            <div class="span8 page-content">
+            <div class="span12 page-content">
+                <ul class="breadcrumb">
+                    <li><a href="index.html">首页</a><span class="divider">/</span></li>
+                    <li class="active">我的</li>
+                </ul>
 
                 <!-- Basic Home Page Template -->
                 <div class="row separator">
-                    <section class="span4 articles-list">
-                        <h3>精选内容</h3>
-                        <ul class="articles" id="featured-ul"></ul>
+                    <section class="span6 articles-list">
+                        <h3>我的发布帖</h3>
+                        <ul class="articles" id="my-message-list"></ul>
                     </section>
 
-                    <section class="span4 articles-list">
-                        <h3>最新消息</h3>
-                        <ul class="articles" id="latest-ul"></ul>
+                    <section class="span6 articles-list">
+                        <h3>我的评论帖</h3>
+                        <ul class="articles" id="my-review-message-list"></ul>
                     </section>
                 </div>
             </div>
             <!-- end of page content -->
-
-            <!-- start of sidebar -->
-            <aside class="span4 page-sidebar">
-                <section class="widget">
-                    <div class="support-widget" id="user-info">
-                        <h3 class="title">用户信息</h3>
-                    </div>
-                </section>
-                <section class="widget">
-                    <h3 class="title" id="user-btn">
-                        <a href="javascript:void(0);" id="message" class='btn btn-mini' style="width: 30%;">发表</a>
-                    </h3>
-                </section>
-                <section class="widget">
-                    <h3 class="title">标签</h3>
-                    <div class="tagcloud" id="tag-div"></div>
-                </section>
-            </aside>
-            <!-- end of sidebar -->
         </div>
     </div>
 </div>
@@ -186,7 +171,7 @@
 <script type='text/javascript' src='../js/jquery.liveSearch.js'></script>
 <script type='text/javascript' src='../js/jquery.form.js'></script>
 <script type='text/javascript' src='../js/jquery.validate.min.js'></script>
-<script type='text/javascript' src='../js/business/index.js'></script>
+<script type='text/javascript' src='../js/business/my-message.js'></script>
 <script type='text/javascript' src='../js/business/user.js'></script>
 
 </body>

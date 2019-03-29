@@ -1,7 +1,6 @@
 $(function () {
     var messageId = sessionStorage.getItem("messageId");
     var userId = sessionStorage.getItem("userId");
-    var userName = sessionStorage.getItem("userName");
 
     // 获取精选内容
     var featured = $('#featured-ul');
@@ -44,6 +43,11 @@ $(function () {
                         $('#tags-span').append("<a href=\"javascript:void(0);\" rel=\"tag\">" + tags[index] + "、 </a>");
                     }
                 }
+
+                if (userId != null && message.userId != null && parseInt(userId) === parseInt(message.userId)) {
+                    $('#post-title').append("<a href=\"javascript:void(0);\" class=\"post-title-edit-delete\" onclick=\"delMessage()\">删除</a>"
+                        + "<a href=\"javascript:void(0);\" class=\"post-title-edit-delete\" onclick=\"editMessage()\">编辑</a>");
+                }
             }
         }
     });
@@ -69,8 +73,8 @@ $(function () {
                             + v.userName + "</a></cite><a class='comment-reply-link' href='javascript:void(0);'>" + "" + "</a>"
                             + "</h5><p class='date'><a href='javascript:void(0)'>"
                             + "<time datetime='" + v.createTime + "'>" + v.createTime + "</time></a>"
-                            + "<a href='javascript:void(0)' class='edit-review' onclick='delReview(\"" + v.id + "\")'>  删除评论  </a>"
-                            + "<a href='javascript:void(0)' class='edit-review' onclick='toEditReview(" + v.id + ")'>  编辑评论  </a>"
+                            + "<a href='javascript:void(0)' class='edit-review' onclick='delReview(\"" + v.id + "\")'>删除评论</a>"
+                            + "<a href='javascript:void(0)' class='edit-review' onclick='toEditReview(" + v.id + ")'>编辑评论</a>"
                             + "</p></div><div class='comment-body'><p>" + v.content + "</p></div></article></li>");
                     } else {
                         review.append("<li class='comment even thread-odd thread-alt depth-1' id='li-comment-4'>"
@@ -169,7 +173,38 @@ $(function () {
             }
         });
     });
+
 });
+
+// 编辑帖子
+function editMessage() {
+    window.location.href = "message.html";
+}
+
+// 删除帖子
+function delMessage() {
+    var messageId = sessionStorage.getItem("messageId");
+    if (confirm("确认要删除这个帖子么？")) {
+        $.ajax({
+            url: '/message/del',
+            type: 'POST',
+            data: {
+                id: messageId
+            },
+            cache: false,
+            success: function (data) {
+                if (data) {
+                    if (data.code === 1) {
+                        alert(data.msg);
+                        window.location.href = "index.html";
+                    } else if (data.code === 2) {
+                        alert(data.msg);
+                    }
+                }
+            }
+        });
+    }
+}
 
 // 删除评论
 function delReview(id) {

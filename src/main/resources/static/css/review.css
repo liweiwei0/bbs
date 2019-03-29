@@ -1,4 +1,11 @@
-.msg-review .edit-review {
+.msg-review .comment-meta .edit-review {
     float: right;
     margin-right: 20px;
+}
+.post-title .post-title-edit-delete {
+    float: right;
+    font-size: 15px;
+}
+.page-content .span-content {
+
 }

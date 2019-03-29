@@ -3,8 +3,10 @@ package fun.lww.bbs.service.impl;
 import com.google.common.collect.Lists;
 import fun.lww.bbs.bean.Message;
 import fun.lww.bbs.bean.User;
+import fun.lww.bbs.common.PageBean;
 import fun.lww.bbs.common.ResultBean;
 import fun.lww.bbs.dao.MessageDao;
+import fun.lww.bbs.dao.ReviewDao;
 import fun.lww.bbs.dao.UserDao;
 import fun.lww.bbs.service.MessageService;
 import fun.lww.bbs.vo.MessageVo;
@@ -22,6 +24,9 @@ public class MessageServiceImpl implements MessageService {
 
     @Autowired
     private MessageDao messageDao;
+
+    @Autowired
+    private ReviewDao reviewDao;
 
     @Autowired
     private UserDao userDao;
@@ -127,8 +132,9 @@ public class MessageServiceImpl implements MessageService {
 
         message.setTitle(messageVo.getTitle());
         message.setContent(messageVo.getContent());
-        // TODO
-//        message.setTag();
+        if (StringUtils.isNotBlank(messageVo.getTag()) && messageVo.getTag().endsWith(" & ")) {
+            message.setTag(messageVo.getTag().substring(0, messageVo.getTag().length() - 3));
+        }
         messageDao.update(message);
         return new ResultBean<>(1, "更新成功");
     }
@@ -140,5 +146,54 @@ public class MessageServiceImpl implements MessageService {
         }
         messageDao.delete(id);
         return new ResultBean<>(1, "删除成功");
+    }
+
+    @Override
+    public PageBean<List<Message>> getMyMessage(MessageVo messageVo) {
+        PageBean<List<Message>> pageBean = new PageBean<>();
+
+        if (null == messageVo || null == messageVo.getUserId()) {
+            return pageBean;
+        }
+        pageBean.setPageNum(messageVo.getPageNum());
+        pageBean.setPageSize(messageVo.getPageSize());
+
+        Integer count = messageDao.findCountByContentAndUserId(messageVo.getContent(), messageVo.getUserId());
+        if (null == count || count == 0) {
+            return pageBean;
+        }
+        pageBean.setTotalCount(count);
+
+//        PageHelper.startPage(pageBean.getStartRow(), pageBean.getPageSize());
+        List<Message> list = messageDao.findByContentAndUserId(messageVo.getContent(), messageVo.getUserId());
+        pageBean.setData(list);
+        return pageBean;
+    }
+
+    @Override
+    public PageBean<List<Message>> getMyReviewMessage(MessageVo messageVo) {
+        PageBean<List<Message>> pageBean = new PageBean<>();
+
+        if (null == messageVo || null == messageVo.getUserId()) {
+            return pageBean;
+        }
+        pageBean.setPageNum(messageVo.getPageNum());
+        pageBean.setPageSize(messageVo.getPageSize());
+
+        List<Integer> messageIds = reviewDao.findIdByUserId(messageVo.getUserId());
+        if (CollectionUtils.isEmpty(messageIds)) {
+            return pageBean;
+        }
+
+        Integer count = messageDao.findCountByIdAndContent(messageVo.getContent(), messageIds);
+        if (null == count || count == 0) {
+            return pageBean;
+        }
+        pageBean.setTotalCount(count);
+
+//        PageHelper.startPage(pageBean.getStartRow(), pageBean.getPageSize());
+        List<Message> list = messageDao.findByIdAndContent(messageVo.getContent(), messageIds);
+        pageBean.setData(list);
+        return pageBean;
     }
 }
