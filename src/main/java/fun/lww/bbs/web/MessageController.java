@@ -25,12 +25,21 @@ public class MessageController {
     private MessageService messageService;
 
     /**
+     * 管理员查询所有
+     */
+    @RequestMapping(value = "/findByCondition", method = RequestMethod.POST)
+    public ResultBean<PageBean<List<MessageVo>>> findByCondition(MessageVo messageVo) {
+        return new ResultBean<>(messageService.findByCondition(messageVo));
+    }
+    /**
      * 最新信息
      */
     @RequestMapping(value = "/getLatest", method = RequestMethod.GET)
     public ResultBean<List<Message>> getLatest(@RequestParam(value = "content", required = false) String content,
-                                @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
-        return new ResultBean<>(messageService.getLatest(content, size));
+                                               @RequestParam(value = "tag", required = false) String tag,
+                                               @RequestParam(value = "size", required = false, defaultValue = "10")
+                                                           int size) {
+        return new ResultBean<>(messageService.getLatest(content, tag, size));
     }
 
     /**
@@ -38,8 +47,10 @@ public class MessageController {
      */
     @RequestMapping(value = "/getFeatured", method = RequestMethod.GET)
     public ResultBean<List<Message>> getFeatured(@RequestParam(value = "content", required = false) String content,
-                                     @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
-        return new ResultBean<>(messageService.getFeatured(content, size));
+                                                 @RequestParam(value = "tag", required = false) String tag,
+                                                 @RequestParam(value = "size", required = false, defaultValue = "10")
+                                                             int size) {
+        return new ResultBean<>(messageService.getFeatured(content, tag, size));
     }
 
     /**

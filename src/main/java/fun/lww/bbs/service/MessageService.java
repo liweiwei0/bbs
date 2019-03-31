@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface MessageService {
 
-    List<Message> getLatest(String content, int size);
+    List<Message> getLatest(String content, String tag, int size);
 
-    List<Message> getFeatured(String content, int size);
+    List<Message> getFeatured(String content, String tag, int size);
 
     Message getMessageById(Integer id);
 
@@ -24,4 +24,6 @@ public interface MessageService {
     PageBean<List<Message>> getMyMessage(MessageVo messageVo);
 
     PageBean<List<Message>> getMyReviewMessage(MessageVo messageVo);
+
+    PageBean<List<MessageVo>> findByCondition(MessageVo messageVo);
 }

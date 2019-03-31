@@ -2,11 +2,17 @@ package fun.lww.bbs.common;
 
 public class PageBean<T> {
 
+    // 第几页
     private int pageNum = 1;
 
+    // 每页多少条
     private int pageSize = 10;
 
-    private int totalCount;
+    // 总页数
+    private int pageTotal;
+
+    // 总条数
+    private int dataTotal;
 
     private T data;
 
@@ -47,11 +53,20 @@ public class PageBean<T> {
         return (pageNum - 1) * pageSize;
     }
 
-    public int getTotalCount() {
-        return totalCount;
+    public int getPageTotal() {
+        return pageTotal;
     }
 
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
+    public void setPageTotal(int pageTotal) {
+        this.pageTotal = pageTotal;
+    }
+
+    public int getDataTotal() {
+        return dataTotal;
+    }
+
+    public void setDataTotal(int dataTotal) {
+        this.pageTotal =  dataTotal % pageSize > 0 ?  dataTotal / pageSize + 1 : dataTotal / pageSize;
+        this.dataTotal = dataTotal;
     }
 }

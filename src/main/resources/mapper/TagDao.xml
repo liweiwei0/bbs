@@ -19,8 +19,46 @@
         `name`, create_time, modify_time
     </sql>
 
+    <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO tag (<include refid="columnNonId"/>)
+        VALUES (#{name}, NOW(), NOW())
+    </insert>
+
+    <update id="update">
+        UPDATE tag SET `name` = #{name}, modify_time = NOW() WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM tag WHERE id = #{id}
+    </delete>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="tag">
+        SELECT <include refid="columns" /> FROM tag WHERE id = #{id}
+    </select>
+
     <select id="findAll" resultMap="tag">
         SELECT <include refid="columns"/> FROM tag ORDER BY modify_time DESC
     </select>
 
+    <select id="findCountByCondition" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM tag WHERE 1=1
+        <if test="name != null and name != ''">
+            AND `name` like CONCAT('%', #{name}, '%')
+        </if>
+    </select>
+
+    <select id="findByCondition" resultMap="tag">
+        SELECT <include refid="columns" /> FROM tag WHERE 1=1
+        <if test="tagVo.name != null and tagVo.name != ''">
+            AND `name` like CONCAT('%', #{tagVo.name}, '%')
+        </if>
+        ORDER BY modify_time DESC LIMIT #{startRow}, #{pageSize}
+    </select>
+
+    <select id="findByName" resultMap="tag">
+        SELECT <include refid="columns" /> FROM tag WHERE 1=1
+        <if test="name != null and name != ''">
+            AND `name` = #{name}
+        </if>
+    </select>
 </mapper>

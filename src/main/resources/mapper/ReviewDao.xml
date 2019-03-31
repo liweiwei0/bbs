@@ -47,4 +47,17 @@
         SELECT DISTINCT message_id FROM review WHERE user_id = #{userId}
     </select>
 
+    <delete id="deleteByMessageId" parameterType="java.lang.Integer">
+        DELETE FROM review WHERE 1=2
+        <if test="messageId != null">
+            OR message_id = #{messageId}
+        </if>
+    </delete>
+
+    <select id="findByContent" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT DISTINCT message_id FROM review WHERE 1=2
+        <if test="content != null and content != ''">
+            OR content like CONCAT('%', #{content}, '%')
+        </if>
+    </select>
 </mapper>

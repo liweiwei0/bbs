@@ -14,7 +14,7 @@
 
     <title>BBS论坛</title>
 
-    <link rel="shortcut icon" href="../images/favicon.png"/>
+    <link rel="shortcut icon" href="../images/favicon2.png"/>
 
     <!-- Style Sheet-->
     <link rel="stylesheet" href="../css/style.css"/>
@@ -26,7 +26,7 @@
     <link rel='stylesheet' id='main-css-css' href='../css/main5152.css?ver=1.0' type='text/css' media='all'/>
     <link rel='stylesheet' id='custom-css-css' href='../css/custom5152.html?ver=1.0' type='text/css' media='all'/>
 
-
+    <link rel="stylesheet" href="../css/myPagination.css" />
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
     <script src="js/html5.js"></script>
@@ -114,11 +114,13 @@
                     <section class="span6 articles-list">
                         <h3>我的发布帖</h3>
                         <ul class="articles" id="my-message-list"></ul>
+                        <div id="pagination-message" class="pagination"></div>
                     </section>
 
                     <section class="span6 articles-list">
                         <h3>我的评论帖</h3>
                         <ul class="articles" id="my-review-message-list"></ul>
+                        <div id="pagination-review-message" class="pagination"></div>
                     </section>
                 </div>
             </div>
@@ -173,6 +175,7 @@
 <script type='text/javascript' src='../js/jquery.validate.min.js'></script>
 <script type='text/javascript' src='../js/business/my-message.js'></script>
 <script type='text/javascript' src='../js/business/user.js'></script>
+<script type='text/javascript' src='../js/business/myPagination.js'></script>
 
 </body>
 </html>

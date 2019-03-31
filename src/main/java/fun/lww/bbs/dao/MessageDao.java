@@ -11,18 +11,30 @@ import java.util.List;
 public interface MessageDao extends BaseDao<Message> {
 
     List<Message> findByContent(@Param("content") String content,
+                                @Param("tag") String tag,
+                                @Param("messageIds") List<Integer> messageIds,
                                 @Param("type") String type,
-                                @Param("size") int size);
+                                @Param("pageSize") int pageSize);
 
     void addHeat(@Param("id") Integer id);
 
     Integer findCountByContentAndUserId(@Param("content") String content, @Param("userId") Integer userId);
 
-    List<Message> findByContentAndUserId(@Param("content") String content, @Param("userId") Integer userId);
+    List<Message> findByContentAndUserId(@Param("content") String content,
+                                         @Param("userId") Integer userId,
+                                         @Param("startRow") int startRow,
+                                         @Param("pageSize") int pageSize);
 
     Integer findCountByIdAndContent(@Param("content") String content,
-                                             @Param("messageIds") List<Integer> messageIds);
+                                    @Param("messageIds") List<Integer> messageIds);
 
     List<Message> findByIdAndContent(@Param("content") String content,
-                                              @Param("messageIds") List<Integer> messageIds);
+                                     @Param("messageIds") List<Integer> messageIds,
+                                     @Param("startRow") int startRow,
+                                     @Param("pageSize") int pageSize);
+
+    Integer findCountByCondition(MessageVo messageVo);
+
+    List<Message> findByCondition(@Param("messageVo") MessageVo messageVo, @Param("startRow") int startRow, @Param("pageSize") int pageSize);
+
 }

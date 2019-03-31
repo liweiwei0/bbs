@@ -12,4 +12,8 @@ public interface ReviewDao extends BaseDao<Review> {
     List<Review> findByMessageId(@Param("messageId") Integer messageId);
 
     List<Integer> findIdByUserId(@Param("userId") Integer userId);
+
+    void deleteByMessageId(@Param("messageId") Integer messageId);
+
+    List<Integer> findByContent(@Param("content") String content);
 }

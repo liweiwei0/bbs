@@ -45,7 +45,8 @@ $(function () {
 
     // 保存帖子
     $('#save-message').on('click', function () {
-        var userId = sessionStorage.getItem("userId");
+        var userId = sessionStorage.getItem("userId") || '';
+        var role = sessionStorage.getItem("role") || '';
         var messageId = sessionStorage.getItem("messageId");
         var title = $('#title').val();
         var comment = $('#comment').val();
@@ -92,7 +93,11 @@ $(function () {
                 if (data) {
                     if (data.code === 1) {
                         alert(data.msg);
-                        window.location.href = "index.html";
+                        if (role === 'user') {
+                            window.location.href = "index.html";
+                        } else if (role === 'manage') {
+                            window.location.href = "manage.html";
+                        }
                     } else if (data.code === 2) {
                         alert(data.msg);
                     }

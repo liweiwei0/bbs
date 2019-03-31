@@ -42,6 +42,15 @@
         <if test="content != null and content != ''">
             AND content like CONCAT('%', #{content}, '%')
         </if>
+        <if test="tag != null and tag != ''">
+            AND tag like CONCAT('%', #{tag}, '%')
+        </if>
+        <if test="messageIds != null and messageIds.size() > 0">
+            OR id IN
+            <foreach collection="messageIds" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
         <if test="type != null and type != ''">
             <choose>
                 <when test="type == 'latest'">
@@ -52,7 +61,7 @@
                 </when>
             </choose>
         </if>
-        LIMIT #{size}
+        LIMIT #{pageSize}
     </select>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="message">
@@ -75,7 +84,7 @@
         <if test="content != null and content != ''">
             AND content like CONCAT('%', #{content}, '%')
         </if>
-        ORDER BY modify_time DESC
+        ORDER BY modify_time DESC LIMIT #{startRow}, #{pageSize}
     </select>
 
     <select id="findCountByIdAndContent" resultType="java.lang.Integer">
@@ -106,6 +115,39 @@
                 </if>
             </if>
         )
-        ORDER BY modify_time DESC
+        ORDER BY modify_time DESC LIMIT #{startRow}, #{pageSize}
+    </select>
+
+    <select id="findCountByCondition" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM message WHERE 1=1
+        <if test="title != null and title != ''">
+            AND title like CONCAT('%', #{title}, '%')
+        </if>
+        <if test="tag != null and tag != ''">
+            AND tag like CONCAT('%', #{tag}, '%')
+        </if>
+        <if test="content != null and content != ''">
+            AND content like CONCAT('%', #{content}, '%')
+        </if>
+        <if test="userId != null and userId != ''">
+            AND user_id = #{userId}
+        </if>
+    </select>
+
+    <select id="findByCondition" resultMap="message">
+        SELECT <include refid="columns" /> FROM message WHERE 1=1
+        <if test="messageVo.title != null and messageVo.title != ''">
+            AND title like CONCAT('%', #{messageVo.title}, '%')
+        </if>
+        <if test="messageVo.tag != null and messageVo.tag != ''">
+            AND tag like CONCAT('%', #{messageVo.tag}, '%')
+        </if>
+        <if test="messageVo.content != null and messageVo.content != ''">
+            AND content like CONCAT('%', #{messageVo.content}, '%')
+        </if>
+        <if test="messageVo.userId != null and messageVo.userId != ''">
+            AND user_id = #{messageVo.userId}
+        </if>
+        ORDER BY modify_time DESC LIMIT #{startRow}, #{pageSize}
     </select>
 </mapper>

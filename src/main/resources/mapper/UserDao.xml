@@ -11,23 +11,37 @@
         <result column="email" property="email"/>
         <result column="create_time" property="createTime"/>
         <result column="modify_time" property="modifyTime"/>
+        <result column="role" property="role"/>
     </resultMap>
 
     <sql id="columns">
-        id, `name`, password, email, create_time, modify_time
+        id, `name`, password, email, create_time, modify_time, role
     </sql>
 
     <sql id="columnNonId">
-        `name`, password, email, create_time, modify_time
+        `name`, password, email, create_time, modify_time, role
     </sql>
 
     <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
         INSERT INTO `user` (<include refid="columnNonId"/>)
-        VALUES (#{name}, #{password}, #{email}, NOW(), NOW())
+        VALUES (#{name}, #{password}, #{email}, NOW(), NOW(), #{role})
     </insert>
+
+    <update id="update">
+        UPDATE `user` SET `name` = #{name}, password = #{password},
+        email = #{email}, modify_time = NOW(), role = #{role}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM `user` WHERE id = #{id}
+    </delete>
 
     <select id="findByEmail" parameterType="java.lang.String" resultMap="user">
         SELECT <include refid="columns"/> FROM `user` WHERE email = #{email}
+        <if test="role != null and role != ''">
+            AND role = #{role}
+        </if>
     </select>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="user">
@@ -44,6 +58,35 @@
         </if>
     </select>
 
+    <select id="findAll" resultMap="user">
+        SELECT <include refid="columns" /> FROM `user`
+    </select>
 
+    <select id="findCountByCondition" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM `user` WHERE 1=1
+        <if test="name != null and name != ''">
+            AND `name` like CONCAT('%', #{name}, '%')
+        </if>
+        <if test="email != null and email != ''">
+            AND `email` like CONCAT('%', #{email}, '%')
+        </if>
+        <if test="role != null and role != ''">
+            AND role = #{role}
+        </if>
+    </select>
+
+    <select id="findByCondition" resultMap="user">
+        SELECT <include refid="columns" /> FROM `user` WHERE 1=1
+        <if test="userVo.name != null and userVo.name != ''">
+            AND `name` like CONCAT('%', #{userVo.name}, '%')
+        </if>
+        <if test="userVo.email != null and userVo.email != ''">
+            AND `email` like CONCAT('%', #{userVo.email}, '%')
+        </if>
+        <if test="userVo.role != null and userVo.role != ''">
+            AND role = #{userVo.role}
+        </if>
+        ORDER BY modify_time DESC LIMIT #{startRow}, #{pageSize}
+    </select>
 
 </mapper>

@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -32,8 +34,9 @@ public class MessageServiceImpl implements MessageService {
     private UserDao userDao;
 
     @Override
-    public List<Message> getLatest(String content, int size) {
-        List<Message> list = messageDao.findByContent(content, "latest", size);
+    public List<Message> getLatest(String content, String tag, int size) {
+        List<Integer> messageIds = reviewDao.findByContent(content);
+        List<Message> list = messageDao.findByContent(content, tag, messageIds, "latest", size);
         if (!CollectionUtils.isEmpty(list)) {
             list.forEach(it -> {
                 if (StringUtils.isNotBlank(it.getTag())) {
@@ -49,8 +52,9 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Message> getFeatured(String content, int size) {
-        List<Message> list = messageDao.findByContent(content, "featured", size);
+    public List<Message> getFeatured(String content, String tag, int size) {
+        List<Integer> messageIds = reviewDao.findByContent(content);
+        List<Message> list = messageDao.findByContent(content, tag, messageIds, "featured", size);
         if (!CollectionUtils.isEmpty(list)) {
             list.forEach(it -> {
                 if (StringUtils.isNotBlank(it.getTag())) {
@@ -144,6 +148,7 @@ public class MessageServiceImpl implements MessageService {
         if (null == id) {
             return new ResultBean<>(2, "删除失败");
         }
+        reviewDao.deleteByMessageId(id);
         messageDao.delete(id);
         return new ResultBean<>(1, "删除成功");
     }
@@ -162,10 +167,9 @@ public class MessageServiceImpl implements MessageService {
         if (null == count || count == 0) {
             return pageBean;
         }
-        pageBean.setTotalCount(count);
+        pageBean.setDataTotal(count);
 
-//        PageHelper.startPage(pageBean.getStartRow(), pageBean.getPageSize());
-        List<Message> list = messageDao.findByContentAndUserId(messageVo.getContent(), messageVo.getUserId());
+        List<Message> list = messageDao.findByContentAndUserId(messageVo.getContent(), messageVo.getUserId(), pageBean.getStartRow(), pageBean.getPageSize());
         pageBean.setData(list);
         return pageBean;
     }
@@ -189,11 +193,35 @@ public class MessageServiceImpl implements MessageService {
         if (null == count || count == 0) {
             return pageBean;
         }
-        pageBean.setTotalCount(count);
+        pageBean.setDataTotal(count);
 
-//        PageHelper.startPage(pageBean.getStartRow(), pageBean.getPageSize());
-        List<Message> list = messageDao.findByIdAndContent(messageVo.getContent(), messageIds);
+        List<Message> list = messageDao.findByIdAndContent(messageVo.getContent(), messageIds, pageBean.getStartRow(), pageBean.getPageSize());
         pageBean.setData(list);
+        return pageBean;
+    }
+
+    @Override
+    public PageBean<List<MessageVo>> findByCondition(MessageVo messageVo) {
+        PageBean<List<MessageVo>> pageBean = new PageBean<>(messageVo.getPageNum(), messageVo.getPageSize());
+        Integer count = messageDao.findCountByCondition(messageVo);
+
+        if (null == count || count <= 0) {
+            pageBean.setDataTotal(0);
+            return pageBean;
+        }
+        pageBean.setDataTotal(count);
+
+        List<MessageVo> result = Lists.newArrayList();
+        List<Message> list = messageDao.findByCondition(messageVo, pageBean.getStartRow(), pageBean.getPageSize());
+        List<User> users = userDao.findAll();
+        Map<Integer, String> userMap = users.stream().collect(Collectors.toMap(User::getId, User::getName));
+        list.forEach(it -> {
+            MessageVo messageVo1 = new MessageVo(it);
+            messageVo1.setUserName(userMap.get(it.getUserId()));
+            result.add(messageVo1);
+        });
+
+        pageBean.setData(result);
         return pageBean;
     }
 }

@@ -36,6 +36,7 @@ function toLogin() {
 function layout() {
     sessionStorage.removeItem("userId");
     sessionStorage.removeItem("userName");
+    sessionStorage.removeItem("role");
     window.location.reload();
 }
 
@@ -64,6 +65,7 @@ function login() {
                     alert(data.msg);
                     sessionStorage.setItem("userId", data.data.id);
                     sessionStorage.setItem("userName", data.data.name);
+                    sessionStorage.setItem("role", 'user');
                     window.location.reload();
                 } else if (data.code === 2) {
                     alert(data.msg);

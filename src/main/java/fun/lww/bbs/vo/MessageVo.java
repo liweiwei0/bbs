@@ -1,10 +1,17 @@
 package fun.lww.bbs.vo;
 
-public class MessageVo {
+import com.fasterxml.jackson.annotation.JsonFormat;
+import fun.lww.bbs.bean.Message;
+
+import java.util.Date;
+
+public class MessageVo extends PageVo{
 
     private Integer id;
 
     private Integer userId;
+
+    private String userName;
 
     private String title;
 
@@ -12,9 +19,24 @@ public class MessageVo {
 
     private String content;
 
-    private int pageNum = 1;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
-    private int pageSize = 10;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date modifyTime;
+
+    public MessageVo() {
+    }
+
+    public MessageVo(Message message) {
+        this.id = message.getId();
+        this.title = message.getTitle();
+        this.tag = message.getTag();
+        this.content = message.getContent();
+        this.userId = message.getUserId();
+        this.createTime = message.getCreateTime();
+        this.modifyTime = message.getModifyTime();
+    }
 
     public Integer getId() {
         return id;
@@ -56,19 +78,27 @@ public class MessageVo {
         this.content = content;
     }
 
-    public int getPageNum() {
-        return pageNum;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public int getPageSize() {
-        return pageSize;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
     }
 }
